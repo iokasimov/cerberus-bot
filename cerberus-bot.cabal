@@ -19,6 +19,8 @@ source-repository head
 
 library
   exposed-modules:
+    Network.Telegram.API.Bot.Cerberus.Configuration
+    Network.Telegram.API.Bot.Cerberus.Server
   build-depends: base == 4.*, async, transformers, lens, text, warp,
     servant, servant-server, optparse-applicative, stm, wreq, telega
   default-extensions: GeneralizedNewtypeDeriving, NoImplicitPrelude, LambdaCase,
