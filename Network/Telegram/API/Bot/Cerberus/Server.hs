@@ -32,6 +32,6 @@ server (Settings token chat_id session) secret update =
 		liftIO . void . async . telegram session token chat_id $ webhook update
 
 webhook :: Update -> Telegram Environment ()
-webhook (Incoming _ (Textual _ _ _ txt)) = lift . lift . putStrLn $ txt
+webhook i@(Incoming _ (Textual _ _ _ txt)) = lift . lift . print $ i
 webhook (Membership _ m) = lift . lift . print $ m
-webhook _ = pure ()
+webhook x = lift . lift . print $ x
