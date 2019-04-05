@@ -28,7 +28,7 @@ options = Arguments <$> token <*> chat_id <*> db_filepath where
 	chat_id = negate <$> argument auto (metavar "CHAT_ID")
 
 	db_filepath :: Parser FilePath
-	db_filepath = argument auto (metavar "DB_FILEPATH")
+	db_filepath = argument str (metavar "DB_FILEPATH")
 
 data Settings = Settings Token Int64 Connection Session
 
