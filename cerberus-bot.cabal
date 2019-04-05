@@ -22,7 +22,7 @@ library
     Network.Telegram.API.Bot.Cerberus.Configuration
     Network.Telegram.API.Bot.Cerberus.Server
   build-depends: base == 4.*, async, transformers, lens, text, warp,
-    servant, servant-server, optparse-applicative, stm, wreq, telega
+    servant, servant-server, optparse-applicative, stm, wreq, telega, sqlite-simple
   default-extensions: GeneralizedNewtypeDeriving, NoImplicitPrelude, LambdaCase,
     OverloadedStrings, StandaloneDeriving, TypeApplications, ViewPatterns,
     ScopedTypeVariables, TypeOperators, DataKinds, PackageImports
@@ -30,8 +30,8 @@ library
 
 executable bot
   main-is: Network/Telegram/API/Bot/Main.hs
-  build-depends: cerberus-bot, base == 4.*, async, transformers, lens, text,warp, servant,
-    servant-server, optparse-applicative, stm, wreq, telega
+  build-depends: cerberus-bot, base == 4.*, async, transformers, lens, text, warp,
+    servant, servant-server, optparse-applicative, stm, wreq, telega, sqlite-simple
   default-extensions: GeneralizedNewtypeDeriving, NoImplicitPrelude, LambdaCase,
     OverloadedStrings, StandaloneDeriving, TypeApplications, ViewPatterns,
     ScopedTypeVariables, TypeOperators, DataKinds, PackageImports

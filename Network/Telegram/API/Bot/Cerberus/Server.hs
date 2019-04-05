@@ -16,7 +16,6 @@ import "telega" Network.Telegram.API.Bot (Telegram, Token (Token), telegram)
 import "telega" Network.Telegram.API.Bot.Property (identificator)
 import "telega" Network.Telegram.API.Bot.Object.Message (Message (Textual))
 import "telega" Network.Telegram.API.Bot.Object.Update (Update (Membership, Incoming), chat)
-import "text" Data.Text.IO (putStrLn)
 import "transformers" Control.Monad.Trans.Class (lift)
 
 import Network.Telegram.API.Bot.Cerberus.Configuration (Environment, Settings (Settings))
@@ -27,11 +26,11 @@ deriving instance ToHttpApiData Token
 deriving instance FromHttpApiData Token
 
 server :: Settings -> Server API
-server (Settings token chat_id session) secret update =
+server (Settings token chat_id connection session) secret update =
 	if secret /= token || (identificator $ update ^. chat) /= chat_id then throwError err403 else
-		liftIO . void . async . telegram session token chat_id $ webhook update
+		liftIO . void . async . telegram session token (connection, chat_id) $ webhook update
 
 webhook :: Update -> Telegram Environment ()
-webhook i@(Incoming _ (Textual _ _ _ txt)) = lift . lift . print $ i
+webhook i@(Incoming _ (Textual _ _ _ _)) = lift . lift . print $ i
 webhook (Membership _ m) = lift . lift . print $ m
 webhook x = lift . lift . print $ x
