@@ -1,4 +1,4 @@
-module Network.Telegram.API.Bot.Cerberus.Database (Role (..), check, new) where
+module Network.Telegram.API.Bot.Cerberus.Database (Role (..), Somebody (..), check, new) where
 
 import "base" Control.Applicative (Applicative (pure, (<*>)))
 import "base" Data.Function (id, ($), (&))
@@ -47,4 +47,4 @@ check from connection = do
 
 new :: From -> Connection -> IO ()
 new from connection = Somebody (identificator from) Guest &
-	execute connection "INSERT INTO members (id, role) VALUES (?)"
+	execute connection "INSERT INTO members (id, role) VALUES (?,?)"
