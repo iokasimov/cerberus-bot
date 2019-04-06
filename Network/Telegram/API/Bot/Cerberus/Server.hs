@@ -20,6 +20,7 @@ import "telega" Network.Telegram.API.Bot.Object.Update (Update (Membership, Inco
 import "transformers" Control.Monad.Trans.Class (lift)
 
 import Network.Telegram.API.Bot.Cerberus.Configuration (Environment, Settings (Settings))
+import Network.Telegram.API.Bot.Cerberus.Operations ()
 
 type API = "webhook" :> Capture "secret" Token :> ReqBody '[JSON] Update :> Post '[JSON] ()
 
@@ -36,4 +37,4 @@ server (Settings token chat_id connection session) secret update =
 	wrong_token = secret /= token
 
 webhook :: Update -> Telegram Environment ()
-webhook x = lift . lift . print $ x
+webhook _ = pure ()

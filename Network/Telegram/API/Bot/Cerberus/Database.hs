@@ -1,4 +1,4 @@
-module Network.Telegram.API.Bot.Cerberus.Database (Role (..)) where
+module Network.Telegram.API.Bot.Cerberus.Database (Role (..), check, new) where
 
 import "base" Control.Applicative (Applicative (pure, (<*>)))
 import "base" Data.Function (id, ($), (&))
@@ -9,7 +9,7 @@ import "base" Data.Semigroup (Semigroup ((<>)))
 import "base" System.IO (IO)
 import "base" Text.Show (Show (show))
 import "lens" Control.Lens (element, (^?))
-import "sqlite-simple" Database.SQLite.Simple (Connection, Only (Only), SQLData (SQLInteger), query)
+import "sqlite-simple" Database.SQLite.Simple (Connection, Only (Only), SQLData (SQLInteger), execute, query)
 import "sqlite-simple" Database.SQLite.Simple.Ok (Ok (Ok))
 import "sqlite-simple" Database.SQLite.Simple.Internal (Field (Field))
 import "sqlite-simple" Database.SQLite.Simple.FromField (FromField (fromField), ResultError (ConversionFailed), returnError)
@@ -44,3 +44,7 @@ check :: From -> Connection -> IO Somebody
 check from connection = do
 	r <- query connection "SELECT * from members where id = ?" (Only $ identificator from)
 	pure $ r ^? element 0 & maybe (Somebody (identificator from) Guest) id
+
+new :: From -> Connection -> IO ()
+new from connection = Somebody (identificator from) Guest &
+	execute connection "INSERT INTO members (id, role) VALUES (?)"
